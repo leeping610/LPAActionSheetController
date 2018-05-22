@@ -1,8 +1,8 @@
 {
   "name": "LPAActionSheetController",
-  "version": "0.1.0",
-  "summary": "A short description of LPAActionSheetController.",
-  "description": "TODO: Add long description of the pod here.",
+  "version": "0.1.1",
+  "summary": "一个类似actionSheet的菜单.",
+  "description": "一个类似actionSheet的底部弹出菜单",
   "homepage": "https://github.com/leeping610/LPAActionSheetController",
   "license": {
     "type": "MIT",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/leeping610/LPAActionSheetController.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "8.0"

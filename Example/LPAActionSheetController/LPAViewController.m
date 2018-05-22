@@ -30,7 +30,9 @@
 }
 
 - (IBAction)buttonHandler:(id)sender {
-    LPAActionSheetController *actionSheetController = [[LPAActionSheetController alloc] initWithTitle:@"hahaha" titleImage:nil dismissBlock:nil];
+    LPAActionSheetController *actionSheetController = [[LPAActionSheetController alloc] initWithTitle:@"hahaha" titleImage:[UIImage imageNamed:@"bhp"] dismissBlock:^{
+        
+    }];
     actionSheetController.tapToClose = NO;
     LPAActionSheetAction *action1 = [LPAActionSheetAction actionWithTitle:@"action1"
                                                                 textColor:[UIColor blackColor]
