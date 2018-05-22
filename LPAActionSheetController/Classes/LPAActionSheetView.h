@@ -14,6 +14,7 @@ FOUNDATION_EXTERN CGFloat const kLPAActionSheetViewRowHeight;
 @protocol LPAActionSheetViewDelegate <NSObject>
 
 - (void)actionSheetView:(LPAActionSheetView *)actionSheetView didClickedButtonAtIndex:(NSUInteger)index;
+- (void)actionSheetViewDidCloseButtonClicked:(LPAActionSheetView *)actionSheetView;
 
 @end
 
@@ -23,8 +24,8 @@ FOUNDATION_EXTERN CGFloat const kLPAActionSheetViewRowHeight;
 @property (nonatomic, strong) UIImage *titleImage;
 @property (nonatomic, strong) UIColor *titleColor;
 @property (nonatomic, assign) CGFloat rowHeight;
-/// default is yes
-@property (nonatomic, assign) BOOL tapToClose;
+/// default is no
+@property (nonatomic, assign) BOOL showCloseButton;
 
 @property (nonatomic, weak) id<LPAActionSheetViewDelegate> delegate;
 

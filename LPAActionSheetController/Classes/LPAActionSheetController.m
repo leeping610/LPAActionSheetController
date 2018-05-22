@@ -40,6 +40,7 @@
 @property (nonatomic, copy, readwrite) NSString *titleText;
 @property (nonatomic, strong, readwrite) UIImage *titleImage;
 
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureResognizer;
 @property (nonatomic, strong) NSMutableArray *actionList;
 @property (nonatomic, copy) void(^dismissBlock)(void);
 
@@ -72,8 +73,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapGestureHandler:)];
-    [self.view addGestureRecognizer:tapGestureRecognizer];
+    [self.view addGestureRecognizer:self.tapGestureResognizer];
     [self.view addSubview:self.actionSheetView];
     [_actionList enumerateObjectsUsingBlock:^(LPAActionSheetAction *action, NSUInteger idx, BOOL *stop){
         [self.actionSheetView addActionSheetButtonWithTitle:action.title
@@ -136,6 +136,20 @@
     }];
 }
 
+- (void)actionSheetViewDidCloseButtonClicked:(LPAActionSheetView *)actionSheetView {
+    CGRect actionSheetFrame = self.actionSheetView.frame;
+    actionSheetFrame.origin.y = CGRectGetHeight(self.view.bounds) + actionSheetFrame.size.height;
+    [UIView animateWithDuration:0.3f animations:^{
+        self.actionSheetView.frame = actionSheetFrame;
+        self.view.backgroundColor = [UIColor clearColor];
+    } completion:^(BOOL finished){
+        if (self.dismissBlock) {
+            self.dismissBlock();
+        }
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
+}
+
 #pragma mark - Custom Accessors
 
 - (LPAActionSheetView *)actionSheetView {
@@ -152,7 +166,8 @@
         _actionSheetView.delegate = self;
         _actionSheetView.title = _titleText;
         _actionSheetView.titleColor = _titleColor;
-        _actionSheetView.tapToClose = _tapToClose;
+        _actionSheetView.titleImage = _titleImage;
+        _actionSheetView.showCloseButton = !_tapToClose;
         if (_backgroundColor) {
             _actionSheetView.backgroundColor = _backgroundColor;
         }else {
@@ -160,6 +175,18 @@
         }
     }
     return _actionSheetView;
+}
+
+- (void)setTapToClose:(BOOL)tapToClose {
+    _tapToClose = tapToClose;
+    self.tapGestureResognizer.enabled = _tapToClose;
+}
+
+- (UITapGestureRecognizer *)tapGestureResognizer {
+    if (!_tapGestureResognizer) {
+        _tapGestureResognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapGestureHandler:)];
+    }
+    return _tapGestureResognizer;
 }
 
 @end

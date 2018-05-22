@@ -132,7 +132,6 @@ static NSString *const kLPAActionSheetButtonBackgroundColorKey = @"LPAActionShee
         self.clipsToBounds = YES;
         self.layer.cornerRadius = 12.0f;
         
-        _tapToClose = YES;
         _buttonList = [[NSMutableArray alloc] init];
         [self addSubview:self.tableView];
     }
@@ -155,7 +154,9 @@ static NSString *const kLPAActionSheetButtonBackgroundColorKey = @"LPAActionShee
 #pragma mark - Event Response
 
 - (void)closeButtonHandler:(UIButton *)button {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(actionSheetViewDidCloseButtonClicked:)]) {
+        [self.delegate actionSheetViewDidCloseButtonClicked:self];
+    }
 }
 
 #pragma mark - LPAActionSheetTableViewCell Delegate
@@ -274,6 +275,11 @@ static NSString *const kLPAActionSheetButtonBackgroundColorKey = @"LPAActionShee
     return _headerImageView;
 }
 
+- (void)setTitleImage:(UIImage *)titleImage {
+    _titleImage = titleImage;
+    _headerImageView.image = _titleImage;
+}
+
 - (void)setTitle:(NSString *)title {
     _title = [title copy];
     if (_title) {
@@ -290,9 +296,9 @@ static NSString *const kLPAActionSheetButtonBackgroundColorKey = @"LPAActionShee
     }
 }
 
-- (void)setTapToClose:(BOOL)tapToClose {
-    _tapToClose = tapToClose;
-    if (!_tapToClose) {
+- (void)setShowCloseButton:(BOOL)showCloseButton {
+    _showCloseButton = showCloseButton;
+    if (_showCloseButton) {
         UIImage *image = LPAImageResource(@"close");
         if (image) {
             UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_tableView.bounds), 30)];
