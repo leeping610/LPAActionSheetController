@@ -1,0 +1,6 @@
+framework module Pods_LPAActionSheetController_Example {
+  umbrella header "Pods-LPAActionSheetController_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
