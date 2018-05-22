@@ -1,0 +1,6 @@
+framework module LPAActionSheetController {
+  umbrella header "LPAActionSheetController-umbrella.h"
+
+  export *
+  module * { export * }
+}
